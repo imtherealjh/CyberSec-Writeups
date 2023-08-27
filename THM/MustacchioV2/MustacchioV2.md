@@ -9,7 +9,7 @@ At the commencement of each CTF challenge, our initial step consistently involve
 sudo nmap -sC -sV -O -T4 10.10.41.60 -vv -p- -oG all
 ```
 
-![Nmap Scan](/images/nmap.PNG)
+![Nmap Scan](/THM/MustacchioV2/images/nmap.PNG)
 
 As evident from our findings, two ports, specifically port 80 and port 8765, are open and host a website.
 
@@ -22,17 +22,17 @@ as part of our scan to find any hidden directories.
 
 While waiting for the gobuster scan to finish scanning the directories, i went to the website to find for any hints to continue with the challenge.
 
-![Website](/images/website.PNG)
+![Website](/THM/MustacchioV2/images/website.PNG)
 
 However i did not find anything that is useful to continue the challenge.
 
 Once the Gobuster scan had completed, I returned to the terminal to review the results.
 
-![Gobuster Scan](/images/gobuster.PNG)
+![Gobuster Scan](/THM/MustacchioV2/images/gobuster.PNG)
 
 This is where i traversed around the directory that was discovered by the Gobuster and found something interesting in the custom/js folder.
 
-![custom/js folder](/images/custom.PNG)
+![custom/js folder](/THM/MustacchioV2/images/custom.PNG)
 
 I found the file called **"users.bak"** which immediately alarmed me that it could be an backup file that contains database information.
 
@@ -41,36 +41,36 @@ After downloading the file, this is where i ran
 file users.bak
 ```
 
-![users.bak strings](/images/usersbak.PNG)
+![users.bak strings](/THM/MustacchioV2/images/usersbak.PNG)
 
 which confirms my doubt that it was a sqlite backup file.
 
 After that i ran **"sqlitebrowser"** and drop the file inside the newly opened tab.
 
-![SQLite](/images/SQLite.PNG)
+![SQLite](/THM/MustacchioV2/images/SQLite.PNG)
 
 This is where i found a username and password in hash format, so i used crackstation.net to crack the password.
 
-![user](/images/user.PNG)
+![user](/THM/MustacchioV2/images/user.PNG)
 
-![crack](/images/crack.PNG)
+![crack](/THM/MustacchioV2/images/crack.PNG)
 
 ### Port 8765
 From the original website that is hosted at port 80, i couldn't use the login details that i have found from the previous recon so i decided to go to port 8765.
 
-![login](/images/login.PNG)
+![login](/THM/MustacchioV2/images/login.PNG)
 
 Ohhh shit, from here i found a login page and decided to give the username and password that i have gathered during the previous recon.
 
-![successful login](/images/successful.PNG)
+![successful login](/THM/MustacchioV2/images/successful.PNG)
 
 It worked!
 
 I then chose to spend some time exploring the website, during which I came across the following information.
 
-![view source](/images/source.PNG)
+![view source](/THM/MustacchioV2/images/source.PNG)
 
-At this juncture, I opted to download the file (/auth/dontforget.bak) from the website and inspect its contents, where I subsequently uncovered...
+At this juncture, I opted to download the file (/THM/MustacchioV2/auth/dontforget.bak) from the website and inspect its contents, where I subsequently uncovered...
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -83,9 +83,9 @@ At this juncture, I opted to download the file (/auth/dontforget.bak) from the w
 
 I made the decision to experiment with the form both by submitting it without any input and by using the input I had identified in the file.
 
-![empty](/images/emptyinput.PNG)
+![empty](/THM/MustacchioV2/images/emptyinput.PNG)
 
-![xml](/images/xmlinput.PNG)
+![xml](/THM/MustacchioV2/images/xmlinput.PNG)
 
 At this point, I initiated a Google search to investigate XML vulnerabilities, which led me to discover a vulnerability known as XML External Entity (XXE) Processing.
 
@@ -106,7 +106,7 @@ I decided to give the payload a try
 </comment>  
 ```
 
-![xxe](/images/xxe.PNG)
+![xxe](/THM/MustacchioV2/images/xxe.PNG)
 
 It worked!
 
@@ -116,11 +116,11 @@ ssh2john barry_id_rsa > for_john
 john --wordlist=/usr/share/wordlists/rockyou.txt forjohn
 ```
 
-![john cracked](/images/cracked.PNG)
+![john cracked](/THM/MustacchioV2/images/cracked.PNG)
 
 Subsequently, I utilized the "id_rsa" file along with the cracked passphrase to establish an SSH connection to the target machine.
 
-![ssh](/images/ssh.PNG)
+![ssh](/THM/MustacchioV2/images/ssh.PNG)
 
 ## Privilege Escaltion
 ### Potential methods for privilege escalation
@@ -137,27 +137,28 @@ find / -perm -u=s -type f 2>/dev/null
 ```
 
 I came across an intriguing file that had the capability to run as a privileged user
-![suid](/images/suid.PNG)
+
+![suid](/THM/MustacchioV2/images/suid.PNG)
 
 I navigated to that directory and tried to find out what the file does.
 
 At this point, I discovered that one of the commands within the program was not utilizing an absolute path.
 
-![attack](/images/attack.PNG)
+![attack](/THM/MustacchioV2/images/attack.PNG)
 
 This reminded me of the technique mentioned in the https://tryhackme.com/room/linuxprivesc, where a similar method was discussed for privilege escalation.
 
 ### Creating payload
 
-![payload](/images/payload.PNG)
+![payload](/THM/MustacchioV2/images/payload.PNG)
 
 Setting path for payload to execute
 
-![path](/images/path.PNG)
+![path](/THM/MustacchioV2/images/path.PNG)
 
 Execute the payload
 
-![execute](/images/root.PNG)
+![execute](/THM/MustacchioV2/images/root.PNG)
 
 Viola, now you are root.
 
