@@ -122,7 +122,7 @@ Subsequently, I utilized the "id_rsa" file along with the cracked passphrase to 
 
 ![ssh](/THM/MustacchioV2/images/ssh.PNG)
 
-## Privilege Escaltion
+## Privilege Escalation
 ### Potential methods for privilege escalation
 I initiated a series of commands to assess the system for potential vulnerabilities.
 ```
