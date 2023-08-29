@@ -1,6 +1,10 @@
 # Mustacchio V2
 Easy boot2boot machine
 
+https://tryhackme.com/room/mustacchio
+
+Author: zyeinn
+
 ## Recon
 ### Nmap Scan
 At the commencement of each CTF challenge, our initial step consistently involves conducting an nmap scan.
