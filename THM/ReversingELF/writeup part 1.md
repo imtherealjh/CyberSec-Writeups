@@ -28,7 +28,7 @@ local_78[1] = 0x2b;
 local_78[2] = 0x20;
 local_78[3] = 0x26;
 local_78[4] = 0x3a;
-...
+......
 ```
 
 Subsequently, the program executed the memset() function on the local_98 array. However, due to my limited experience in reverse engineering, I was unfamiliar with the function's functionality. Therefore, I conducted further research to gain a better understanding of its purpose.
