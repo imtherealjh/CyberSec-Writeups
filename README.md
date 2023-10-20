@@ -1,2 +1,2 @@
 # Cybersecurity Writeups
-Repository to hold all of the cyber security stuffs that i have been learning
+Repository to hold all of the cyber security stuffs such as Pentesting, Reverse Engineer that i have been learning
