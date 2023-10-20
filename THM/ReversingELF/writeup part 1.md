@@ -23,7 +23,7 @@ uint local_c;
 In the following lines of code, it appears that the program is populating the local_78 array with several hexadecimal values, as indicated below.
 
 ```
-local_78[0] = 0x25
+local_78[0] = 0x25;
 local_78[1] = 0x2b;
 local_78[2] = 0x20;
 local_78[3] = 0x26;
